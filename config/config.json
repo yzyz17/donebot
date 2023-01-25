@@ -1,0 +1,9 @@
+{
+    "name": "YouTubeDLBOT",
+    "filename": {
+        "mp3": "YzBOTAudio",
+        "mp4": "YzBOTVedio"
+    },
+    "timezone": "Asia/Jakarta",
+    "groups": false
+}
