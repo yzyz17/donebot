@@ -21,7 +21,7 @@ const NMTM = require('./Neams/neams.json');
 const msg = "اشتغل بوتك";
 const AdminMSG = '966531684687@c.us';
 
-
+let tsket = ['اص بس مابقى الا شبر ونص يحتسي','وفي النهاية جميعًا سنكون ذكريات','اسكت بس محد طلب رايك','لامنه طلب رايك اهرج','زين.','كل زق بس','اثر القعر يهرجن عربي؟','مب تسنك بتلت تسولف ؟'];
 
 const client = new Client({
     restartOnAuthFail: true,
@@ -123,7 +123,7 @@ client.on('message', async message => {
 				try {
 						  
 	  				let cchats = JSON.parse(fs.readFileSync('chats.json'));
-	 				client.sendMessage(engrb , 'تم قبول طلب التفعيل بالقروب الان يمكنكم استخدام البوت');
+	 				client.sendMessage(engrb , ' تم قبول طلب التفعيل بالقروب الان يمكنكم استخدام البوت قم بأرسال كلمة *menu*');
 	  				cchats.push(engrb);
   
 	  				fs.writeFileSync('chats.json', JSON.stringify(cchats));
@@ -154,7 +154,7 @@ client.on('message', async message => {
 
 		try{
 			if(message.body.startsWith('اقترح')){
-				client.sendMessage("966531684687@g.us",message.body);
+				client.sendMessage(AdminMSG,message.body);
 				client.sendMessage(message.from,"تم ارسال اقتراحك");
 
 			}else if(message.body.toLowerCase()==="menu"){
@@ -312,17 +312,7 @@ client.on('message', async (message) => {
     let msg2 = ' قم بالرد على هذه الرسالة بالمعلومات الجديدة';
     const RD = await message.getQuotedMessage();
    
-    if(contact.number === '966531684687'){
-        if (message.body.startsWith('Pass')){
-            client.sendMessage(message.from,'تم تغيير رمز التفعيل');
-            PassWord = message.body.slice(4);
-        }else if(message.body.startsWith('Pass1')){
-            client.sendMessage(message.from,'تم تغيير رمز التفعيل');
-            PassWord1 = message.body.slice(5);
-        }else if(message.body === 'Menu'){
-            client.sendMessage(message.from,menu);
-        }
-    }
+    
     if(message.from == adminGrb[0]){
         if(message.body === 'فرق'){
           let arr = JSON.parse(fs.readFileSync('names.json'));
@@ -738,6 +728,7 @@ client.on('message', async message => {
 	}
 });
 
+let mjd ='on';
 
 //---------------------youtupe-----------------------------------------------
 const config = require('./config/config.json');
@@ -745,12 +736,29 @@ let data;
 client.on('message', async message => {
 	let chta = JSON.parse(fs.readFileSync('chats.json'));
 	let chat = await message.getChat();
+	let con = await message.getContact();
+	if(con.number==='966531684687'){
+		if(message.body==='اجلدة'){
+			mjd = 'on';
+			client.sendMessage(message.from,"ازهل امه");
+		}
+		if(message.body==='ارحمة'){
+			mjd = 'off';
+			client.sendMessage(message.from,"عشانك بس");
+		}
+	}
+	if(mjd==='on'){
+		if(con.number==='966530157084'){
+		const randomNum = Math.floor(Math.random() * 9) + 0;
+		client.sendMessage(message.from,tsket[randomNum]);
+	}}
 	function chkN(arr, str) {
 	return arr.includes(str);
   }
 	let IsEnable = chkN(chta,chat.id._serialized);
 	
 	if(IsEnable) {
+		if(!con.number === '966530157084'){
 		try{
 			let url = message.body;
 			let chatId = message.from;
@@ -794,7 +802,7 @@ client.on('message', async message => {
 		}catch(e){
 			console.log(e);
 		}
-	}
+	}}
 });
 
 //----------------------------------------------------------------------------
@@ -1026,13 +1034,15 @@ client.on('message', async message => {
         }
         let ms1 ;
         let ms2 ;
-        if(message.hasQuotedMsg){
+		if(message.hasQuotedMsg){
             let tst = RD.body;
             if(tst===mesg){
             let savew = message.body;
             let line = savew.split("\n");
              ms1 = line[0];
-             ms2 = line[1];
+             line.shift();
+
+             ms2 = line.join('\n');
              if(ms1.endsWith(' ')){
                 ms1 = ms1.slice(0, -1);
              }
